@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Plugin Jar">
+    <output-path>S:/Minecraft/Bukkit Server/1.8.8 clean/plugins/update</output-path>
+    <root id="archive" name="file-uploader-plugin.jar">
+      <element id="module-output" name="file-uploader-plugin" />
+    </root>
+  </artifact>
+</component>

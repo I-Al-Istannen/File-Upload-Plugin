@@ -22,6 +22,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="file-uploader-plugin" />
         <module name="file-uploader-plugin (1)" />
         <module name="file-uploader-plugin (2)" />
       </profile>

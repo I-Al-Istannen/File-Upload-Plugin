@@ -2,7 +2,7 @@
 
 A small project to upload files to a bukkit server, while not needing FTP access.
 
-The plugin side is somewhat finished, cleanup is still needed. The client is not even really started.
+The plugin side is somewhat finished, cleanup is still needed. The client is not even started.
 
 The communication should go this way:
 
@@ -36,7 +36,7 @@ CLIENT -> SERVER:
 SERVER -> CLIENT:
     PacketListAvailablePaths
     
-# If the server things the client may be down (30 sec inactivity)
+# If the server thinks the client may be down (30 sec inactivity)
 SERVER -> CLIENT:
     PacketHeartbeatSend
 CLIENT -> SERVER:

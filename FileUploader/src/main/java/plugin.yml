@@ -1,0 +1,9 @@
+name: "FileUploader"
+version: "0.1-SNAPSHOT"
+main: me.ialistannen.fileuploaderplugin.FileUploaderPlugin
+author: "I Al Istannen"
+
+commands:
+  testf:
+    usage: "ff"
+    description: "fff"

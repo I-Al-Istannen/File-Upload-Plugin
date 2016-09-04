@@ -1,0 +1,10 @@
+token_duration: "20s"
+
+token_creator: "RANDOM"
+
+groups:
+  test:
+    permission: "test.permission"
+    paths:
+      - "TheOrbit/config.yml"
+      - "TheOrbit/orbits.yml"

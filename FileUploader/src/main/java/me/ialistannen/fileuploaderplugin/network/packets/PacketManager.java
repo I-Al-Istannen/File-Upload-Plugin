@@ -2,6 +2,7 @@ package me.ialistannen.fileuploaderplugin.network.packets;
 
 import me.ialistannen.bukkitutil.commandsystem.util.ReflectionUtil;
 import me.ialistannen.fileuploaderplugin.FileUploaderPlugin;
+import me.ialistannen.fileuploaderplugin.network.packets.client.PacketEndConnection;
 import me.ialistannen.fileuploaderplugin.network.packets.client.PacketHeartBeatResponse;
 import me.ialistannen.fileuploaderplugin.network.packets.client.PacketPostFile;
 import me.ialistannen.fileuploaderplugin.network.packets.client.PacketRequestAvailablePaths;
@@ -58,6 +59,7 @@ public enum PacketManager {
 		registerPacket(10, PacketReadException.class);
 		registerPacket(11, PacketWriteException.class);
 		registerPacket(12, PacketOperationSuccessful.class);
+		registerPacket(13, PacketEndConnection.class);
 	}
 
 	/**

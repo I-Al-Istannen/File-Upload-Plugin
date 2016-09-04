@@ -1,6 +1,7 @@
 package me.ialistannen.fileuploaderplugin.network.server;
 
 import me.ialistannen.fileuploaderplugin.FileUploaderPlugin;
+import me.ialistannen.fileuploaderplugin.network.packets.client.PacketEndConnection;
 import me.ialistannen.fileuploaderplugin.network.packets.client.PacketHeartBeatResponse;
 import me.ialistannen.fileuploaderplugin.network.packets.client.PacketPostFile;
 import me.ialistannen.fileuploaderplugin.network.packets.client.PacketRequestAvailablePaths;
@@ -160,6 +161,11 @@ public class NetHandler implements INetHandler {
 
 		// prevent the stop command from executing
 		timedOut.set(false);
+	}
+
+	@Override
+	public void handlePacketEndConnection(PacketEndConnection packet, ClientServingRunnable runnable) {
+		runnable.stop();
 	}
 
 	/**

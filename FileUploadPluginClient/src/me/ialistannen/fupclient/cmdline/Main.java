@@ -1,4 +1,4 @@
-package me.ialistannen.fupclient;
+package me.ialistannen.fupclient.cmdline;
 
 import me.ialistannen.fupclient.network.packets.Packet;
 import me.ialistannen.fupclient.network.packets.PacketManager;

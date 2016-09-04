@@ -1,0 +1,9 @@
+.heading {
+    -fx-font-size: 2em;
+    -fx-font-family: serif;
+}
+
+.text-field {
+    -fx-font-size: 1.7em;
+    -fx-font-family: monospace;
+}

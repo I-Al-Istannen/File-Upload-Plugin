@@ -1,5 +1,6 @@
 package me.ialistannen.fupclient.network.packets;
 
+import me.ialistannen.fupclient.network.packets.client.PacketEndConnection;
 import me.ialistannen.fupclient.network.packets.client.PacketHeartBeatResponse;
 import me.ialistannen.fupclient.network.packets.client.PacketPostFile;
 import me.ialistannen.fupclient.network.packets.client.PacketRequestAvailablePaths;
@@ -44,6 +45,7 @@ public enum PacketManager {
 		registerDefault();
 	}
 
+	@SuppressWarnings("Duplicates")
 	private void registerDefault() {
 		registerPacket(0, PacketTokenTransmit.class);
 		registerPacket(1, PacketListAvailablePaths.class);
@@ -58,6 +60,7 @@ public enum PacketManager {
 		registerPacket(10, PacketReadException.class);
 		registerPacket(11, PacketWriteException.class);
 		registerPacket(12, PacketOperationSuccessful.class);
+		registerPacket(13, PacketEndConnection.class);
 	}
 
 	/**

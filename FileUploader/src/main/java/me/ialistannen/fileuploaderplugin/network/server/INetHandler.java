@@ -1,5 +1,6 @@
 package me.ialistannen.fileuploaderplugin.network.server;
 
+import me.ialistannen.fileuploaderplugin.network.packets.client.PacketEndConnection;
 import me.ialistannen.fileuploaderplugin.network.packets.client.PacketHeartBeatResponse;
 import me.ialistannen.fileuploaderplugin.network.packets.client.PacketPostFile;
 import me.ialistannen.fileuploaderplugin.network.packets.client.PacketRequestAvailablePaths;
@@ -70,4 +71,12 @@ interface INetHandler {
 	 * @param runnable The {@link ClientServingRunnable} which sent the request
 	 */
 	void handlePacketHeartbeatResponse(PacketHeartBeatResponse packet, ClientServingRunnable runnable);
+
+	/**
+	 * Called when the client sends a {@link PacketEndConnection} packet
+	 *
+	 * @param packet   The packet
+	 * @param runnable The {@link ClientServingRunnable} which sent the request
+	 */
+	void handlePacketEndConnection(PacketEndConnection packet, ClientServingRunnable runnable);
 }

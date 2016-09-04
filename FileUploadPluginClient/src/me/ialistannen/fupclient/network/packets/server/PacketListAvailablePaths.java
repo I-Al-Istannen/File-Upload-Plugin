@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public class PacketListAvailablePaths extends Packet {
 
-	private Set<Path> paths;
+	private final Set<Path> paths;
 
 	/**
 	 * Reads this packet from an input stream. ID will not be part of it.
@@ -29,18 +29,18 @@ public class PacketListAvailablePaths extends Packet {
 	}
 
 	/**
-	 * Allows you to create "normal" instances.
+	 * @param paths The allowed paths
 	 */
 	public PacketListAvailablePaths(Collection<Path> paths) {
 		this.paths = new HashSet<>(paths);
 	}
-
 
 	/**
 	 * Returns the paths
 	 *
 	 * @return The paths
 	 */
+	@SuppressWarnings("unused")
 	public Set<Path> getPaths() {
 		return paths;
 	}
@@ -49,10 +49,9 @@ public class PacketListAvailablePaths extends Packet {
 		try {
 			int size = reader.readInt();
 			for (int i = 0; i < size; i++) {
-				String pathString = (String) reader.readObject();
-				paths.add(Paths.get(pathString));
+				paths.add(Paths.get(reader.readUTF()));
 			}
-		} catch (IOException | ClassNotFoundException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -67,7 +66,7 @@ public class PacketListAvailablePaths extends Packet {
 		try {
 			writer.writeInt(paths.size());
 			for (Path path : paths) {
-				writer.writeObject(path.toString());
+				writer.writeUTF(path.toString());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

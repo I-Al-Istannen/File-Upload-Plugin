@@ -25,7 +25,7 @@ public class PacketAuthenticationStatus extends Packet {
 	}
 
 	/**
-	 * Allows you to create "normal" instances.
+	 * @param authenticationState The current {@link AuthenticationState}
 	 */
 	public PacketAuthenticationStatus(AuthenticationState authenticationState) {
 		this.authenticationState = authenticationState;
@@ -36,10 +36,12 @@ public class PacketAuthenticationStatus extends Packet {
 	 *
 	 * @return The {@link AuthenticationState}
 	 */
+	@SuppressWarnings("unused")
 	public AuthenticationState getAuthenticationState() {
 		return authenticationState;
 	}
 
+	@SuppressWarnings("Duplicates")
 	private void read(ObjectInputStream reader) {
 		try {
 			String stateName = reader.readUTF();

@@ -31,6 +31,7 @@
       <module name="file-uploader-plugin" target="1.8" />
       <module name="file-uploader-plugin (1)" target="1.8" />
       <module name="file-uploader-plugin (2)" target="1.5" />
+      <module name="file-uploader-plugin-client" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -23,7 +23,7 @@ public class PacketTokenTransmit extends Packet {
 	}
 
 	/**
-	 * Allows you to create "normal" instances.
+	 * @param tokenID The ID of the token
 	 */
 	public PacketTokenTransmit(String tokenID) {
 		this.tokenID = tokenID;
@@ -40,8 +40,8 @@ public class PacketTokenTransmit extends Packet {
 
 	private void read(ObjectInputStream reader) {
 		try {
-			tokenID = (String) reader.readObject();
-		} catch (IOException | ClassNotFoundException e) {
+			tokenID = reader.readUTF();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -54,7 +54,7 @@ public class PacketTokenTransmit extends Packet {
 	@Override
 	public void write(ObjectOutputStream writer) {
 		try {
-			writer.writeObject(tokenID);
+			writer.writeUTF(tokenID);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

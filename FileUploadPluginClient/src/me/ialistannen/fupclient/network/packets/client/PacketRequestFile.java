@@ -30,7 +30,7 @@ public class PacketRequestFile extends Packet {
 	public PacketRequestFile(Path path) {
 		this.path = path;
 	}
-	
+
 	/**
 	 * The path it wants to read
 	 *
@@ -42,9 +42,8 @@ public class PacketRequestFile extends Packet {
 
 	private void read(ObjectInputStream reader) {
 		try {
-			String pathString = (String) reader.readObject();
-			path = Paths.get(pathString);
-		} catch (IOException | ClassNotFoundException e) {
+			path = Paths.get(reader.readUTF());
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -57,7 +56,7 @@ public class PacketRequestFile extends Packet {
 	@Override
 	public void write(ObjectOutputStream writer) {
 		try {
-			writer.writeObject(path.toString());
+			writer.writeUTF(path.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -29,6 +29,15 @@ public class PacketPermissionDenied extends Packet {
 		this.message = message;
 	}
 
+	/**
+	 * Returns the error message
+	 *
+	 * @return The message
+	 */
+	public String getMessage() {
+		return message;
+	}
+
 	private void read(ObjectInputStream reader) {
 		try {
 			message = reader.readUTF();

@@ -8,6 +8,12 @@ token_duration: "20s"
 # The token creator. Default is "RANDOM". You can register your own through code and then select them here.
 token_creator: "RANDOM"
 
+# The socket timeout
+socket_timeout: 30s
+
+# The port
+port: 10000
+
 # The groups.
 groups:
   # The name of the group

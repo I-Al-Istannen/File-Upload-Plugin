@@ -5,7 +5,6 @@ import me.ialistannen.fupclient.network.packets.client.PacketPostFile;
 import me.ialistannen.fupclient.network.packets.client.PacketRequestAvailablePaths;
 import me.ialistannen.fupclient.network.packets.client.PacketRequestFile;
 import me.ialistannen.fupclient.network.packets.client.PacketTokenTransmit;
-import me.ialistannen.fupclient.network.packets.server.PacketAuthenticateRequired;
 import me.ialistannen.fupclient.network.packets.server.PacketAuthenticationStatus;
 import me.ialistannen.fupclient.network.packets.server.PacketHeartbeatSend;
 import me.ialistannen.fupclient.network.packets.server.PacketListAvailablePaths;
@@ -34,9 +33,9 @@ import java.util.Objects;
 public enum PacketManager {
 	INSTANCE;
 
-	private Map<Integer, Class<? extends Packet>> packetMap = new HashMap<>();
+	private final Map<Integer, Class<? extends Packet>> packetMap = new HashMap<>();
 
-	private ByteArrayOutputStream byteArrayOutputStream;
+	private final ByteArrayOutputStream byteArrayOutputStream;
 
 	PacketManager() {
 		byteArrayOutputStream = new ByteArrayOutputStream();
@@ -45,20 +44,19 @@ public enum PacketManager {
 	}
 
 	private void registerDefault() {
-		registerPacket(0, PacketAuthenticateRequired.class);
-		registerPacket(1, PacketTokenTransmit.class);
-		registerPacket(2, PacketListAvailablePaths.class);
-		registerPacket(3, PacketRequestFile.class);
-		registerPacket(4, PacketTransmitFile.class);
-		registerPacket(5, PacketPostFile.class);
-		registerPacket(6, PacketHeartbeatSend.class);
-		registerPacket(7, PacketHeartBeatResponse.class);
-		registerPacket(8, PacketRequestAvailablePaths.class);
-		registerPacket(9, PacketAuthenticationStatus.class);
-		registerPacket(10, PacketPermissionDenied.class);
-		registerPacket(11, PacketReadException.class);
-		registerPacket(12, PacketWriteException.class);
-		registerPacket(13, PacketOperationSuccessful.class);
+		registerPacket(0, PacketTokenTransmit.class);
+		registerPacket(1, PacketListAvailablePaths.class);
+		registerPacket(2, PacketRequestFile.class);
+		registerPacket(3, PacketTransmitFile.class);
+		registerPacket(4, PacketPostFile.class);
+		registerPacket(5, PacketHeartbeatSend.class);
+		registerPacket(6, PacketHeartBeatResponse.class);
+		registerPacket(7, PacketRequestAvailablePaths.class);
+		registerPacket(8, PacketAuthenticationStatus.class);
+		registerPacket(9, PacketPermissionDenied.class);
+		registerPacket(10, PacketReadException.class);
+		registerPacket(11, PacketWriteException.class);
+		registerPacket(12, PacketOperationSuccessful.class);
 	}
 
 	/**
@@ -71,7 +69,9 @@ public enum PacketManager {
 	 * @throws NullPointerException     If the class doesn't fulfill the {@link Packet} class contract regarding the
 	 *                                  constructor
 	 */
-	public void registerPacket(int id, Class<? extends Packet> clazz) {
+	private void registerPacket(int id, Class<? extends Packet> clazz) {
+		Objects.requireNonNull(clazz);
+
 		if (packetMap.containsKey(id)) {
 			throw new IllegalArgumentException("There is already a packet with that id.");
 		}
@@ -97,6 +97,8 @@ public enum PacketManager {
 	 * @throws SocketException           Delegated
 	 */
 	public Packet readPacket(ObjectInputStream reader) throws SocketException {
+		Objects.requireNonNull(reader);
+
 		return readPacket(reader, 10000);
 	}
 
@@ -114,8 +116,12 @@ public enum PacketManager {
 	 * @throws UncheckedTimeoutException If a {@link SocketTimeoutException} occurs
 	 * @throws SocketException           Delegated
 	 */
-	public Packet readPacket(ObjectInputStream reader, int timeoutMs) throws SocketException {
+	@SuppressWarnings("Duplicates")
+	private Packet readPacket(ObjectInputStream reader, int timeoutMs) throws SocketException {
+		Objects.requireNonNull(reader);
+
 		try {
+			// Totally weird workaround for a bug (if it is one) where the readInt method would wait forever
 			int counter = 0;
 			while (reader.available() <= 0) {
 				if (counter >= timeoutMs / 1000) {
@@ -133,12 +139,13 @@ public enum PacketManager {
 			Class<? extends Packet> packetClass = packetMap.get(read);
 
 			if (packetClass == null) {
-				throw new IllegalArgumentException("Packet with id: '" + read + "' unknown.");
+				throw new IllegalArgumentException("Packet with id is '" + read + "' unknown.");
 			}
 
 			Constructor<?> constructor = ReflectionUtil.getConstructor(packetClass, ObjectInputStream.class);
 
-			Objects.requireNonNull(constructor, "Subclass doesn't have superclass constructor. Seems legit...");
+			Objects.requireNonNull(constructor, "Subclass doesn't have the superclass constructor. Read the " +
+					"Javadoc...");
 
 			@SuppressWarnings("unchecked") // it is safe, as I instantiate a packet class.
 					Packet packet = (Packet) ReflectionUtil.instantiate(constructor, reader);
@@ -147,7 +154,7 @@ public enum PacketManager {
 		} catch (SocketException e) {
 			throw e;
 		} catch (SocketTimeoutException | InterruptedException e) {
-			throw new UncheckedTimeoutException("Natural", e);
+			throw new UncheckedTimeoutException(e);
 		} catch (IOException e) {
 			throw new RuntimeException("Error while reading from the input stream", e);
 		}
@@ -162,29 +169,34 @@ public enum PacketManager {
 	 * @throws IllegalArgumentException If the packet is not registered
 	 * @throws SocketException          Delegated. If a write error occurs
 	 */
+	@SuppressWarnings("Duplicates")
 	public void writePacket(Packet packet, OutputStream writer, ObjectOutputStream outputStream) throws
 			SocketException {
 		try {
-			boolean written = false;
+			boolean idWritten = false;
 			for (Map.Entry<Integer, Class<? extends Packet>> entry : packetMap.entrySet()) {
 				if (entry.getValue() == packet.getClass()) {
 					outputStream.writeInt(entry.getKey());
-					written = true;
+					idWritten = true;
 					break;
 				}
 			}
 
-			if (!written) {
+			if (!idWritten) {
 				throw new IllegalArgumentException("Packet '" + packet + "' not registered");
 			}
 
 			packet.write(outputStream);
 
+			// write everything
 			outputStream.flush();
 
+			// write it to the output stream
 			writer.write(byteArrayOutputStream.toByteArray());
 			writer.flush();
 
+			// reset both and allow for reuse. Otherwise a ObjectXXStream may exist for too long and the header
+			// get out of sync. (One expects one, the other has already sent one)
 			byteArrayOutputStream.reset();
 			outputStream.reset();
 

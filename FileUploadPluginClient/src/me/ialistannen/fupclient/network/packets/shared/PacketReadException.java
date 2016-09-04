@@ -1,5 +1,6 @@
 package me.ialistannen.fupclient.network.packets.shared;
 
+
 import me.ialistannen.fupclient.network.packets.Packet;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class PacketReadException extends Packet {
 	}
 
 	/**
-	 * Allows you to create "normal" instances.
+	 * @param message The message that explains the error
 	 */
 	public PacketReadException(String message) {
 		this.message = message;
@@ -34,6 +35,7 @@ public class PacketReadException extends Packet {
 	 *
 	 * @return The message
 	 */
+	@SuppressWarnings("unused")
 	public String getMessage() {
 		return message;
 	}

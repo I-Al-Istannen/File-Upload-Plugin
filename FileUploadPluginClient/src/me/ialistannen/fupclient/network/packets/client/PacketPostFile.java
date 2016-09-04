@@ -25,7 +25,7 @@ public class PacketPostFile extends Packet {
 	}
 
 	/**
-	 * Allows you to create "normal" instances.
+	 * @param path The path of the file you are uploading
 	 */
 	public PacketPostFile(Path path) {
 		this.path = path;

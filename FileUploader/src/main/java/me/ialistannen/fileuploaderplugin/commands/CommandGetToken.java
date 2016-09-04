@@ -99,7 +99,6 @@ class CommandGetToken extends DefaultCommand {
 				token.getTokenID(),
 				DurationFormatUtils.formatDurationWords(duration.toMillis(), true, true)));
 
-		System.out.println(token.getTokenID());
 		return CommandResultType.SUCCESSFUL;
 	}
 }

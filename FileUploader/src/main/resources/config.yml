@@ -3,7 +3,7 @@
 language: "en"
 
 # The duration until a token expires
-token_duration: "20s"
+token_duration: "5m"
 
 # The token creator. Default is "RANDOM". You can register your own through code and then select them here.
 token_creator: "RANDOM"

@@ -15,6 +15,7 @@ public class PacketOperationSuccessful extends Packet {
 	 *
 	 * @param reader The reader to read from
 	 */
+	@SuppressWarnings("UnusedParameters") // needed to fulfil the contract
 	public PacketOperationSuccessful(ObjectInputStream reader) {
 
 	}

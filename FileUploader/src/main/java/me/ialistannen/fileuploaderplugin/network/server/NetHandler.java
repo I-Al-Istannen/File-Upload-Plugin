@@ -35,7 +35,7 @@ public class NetHandler implements INetHandler {
 			.toPath();
 
 	private int heartBeatId;
-	private volatile AtomicBoolean timedOut = new AtomicBoolean(false);
+	private final AtomicBoolean timedOut = new AtomicBoolean(false);
 
 	private Token token;
 
@@ -56,12 +56,12 @@ public class NetHandler implements INetHandler {
 
 	@Override
 	public void handleRequestFile(PacketRequestFile packet, ClientServingRunnable runnable) {
-		if (!isAuthenticated()) {
+		if (isNotAuthenticated()) {
 			return;
 		}
 
 		Path path = resolvePath(packet.getPath());
-		if (!hasPermission(path)) {
+		if (hasNoPermission(path)) {
 			runnable.sendPacket(new PacketPermissionDenied("No right to request '" + path + "'"));
 			return;
 		}
@@ -87,12 +87,12 @@ public class NetHandler implements INetHandler {
 
 	@Override
 	public void handlePostFile(PacketPostFile packet, ClientServingRunnable runnable) {
-		if (!isAuthenticated()) {
+		if (isNotAuthenticated()) {
 			return;
 		}
 
 		Path path = resolvePath(packet.getPath());
-		if (!hasPermission(path)) {
+		if (hasNoPermission(path)) {
 			runnable.sendPacket(new PacketPermissionDenied("No right to post '" + path + "'"));
 			return;
 		}
@@ -104,7 +104,7 @@ public class NetHandler implements INetHandler {
 
 	@Override
 	public void handleTransmitFile(PacketTransmitFile packet, ClientServingRunnable runnable) {
-		if (!isAuthenticated()) {
+		if (isNotAuthenticated()) {
 			return;
 		}
 
@@ -144,7 +144,7 @@ public class NetHandler implements INetHandler {
 
 	@Override
 	public void handlePacketRequestAvailablePaths(PacketRequestAvailablePaths packet, ClientServingRunnable runnable) {
-		if (!isAuthenticated()) {
+		if (isNotAuthenticated()) {
 			return;
 		}
 
@@ -167,15 +167,15 @@ public class NetHandler implements INetHandler {
 	 *
 	 * @return True if this object is valid
 	 */
-	private boolean isAuthenticated() {
-		return token != null;
+	private boolean isNotAuthenticated() {
+		return token == null;
 	}
 
 	private Path resolvePath(Path path) {
 		return PLUGINS_DIR.resolve(path).toAbsolutePath();
 	}
 
-	private boolean hasPermission(Path path) {
-		return token.getPaths().contains(path);
+	private boolean hasNoPermission(Path path) {
+		return !token.getPaths().contains(path);
 	}
 }

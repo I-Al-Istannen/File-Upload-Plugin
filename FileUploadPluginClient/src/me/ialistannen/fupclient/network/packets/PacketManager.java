@@ -1,6 +1,5 @@
 package me.ialistannen.fupclient.network.packets;
 
-import me.ialistannen.bukkitutil.commandsystem.util.ReflectionUtil;
 import me.ialistannen.fupclient.network.packets.client.PacketHeartBeatResponse;
 import me.ialistannen.fupclient.network.packets.client.PacketPostFile;
 import me.ialistannen.fupclient.network.packets.client.PacketRequestAvailablePaths;
@@ -15,6 +14,7 @@ import me.ialistannen.fupclient.network.packets.shared.PacketOperationSuccessful
 import me.ialistannen.fupclient.network.packets.shared.PacketReadException;
 import me.ialistannen.fupclient.network.packets.shared.PacketTransmitFile;
 import me.ialistannen.fupclient.network.packets.shared.PacketWriteException;
+import me.ialistannen.fupclient.util.ReflectionUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

@@ -32,6 +32,6 @@ public enum DefaultTokenCreator implements TokenCreator {
 		}
 	};
 
-	private static SecureRandom SECURE_RANDOM_INSTANCE = new SecureRandom();
+	private static final SecureRandom SECURE_RANDOM_INSTANCE = new SecureRandom();
 
 }

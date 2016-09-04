@@ -34,6 +34,7 @@ public class PacketReadException extends Packet {
 	 *
 	 * @return The message
 	 */
+	@SuppressWarnings("unused")
 	public String getMessage() {
 		return message;
 	}

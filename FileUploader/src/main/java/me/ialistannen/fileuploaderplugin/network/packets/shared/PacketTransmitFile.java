@@ -28,6 +28,7 @@ public class PacketTransmitFile extends Packet {
 	 * @param contents The contents
 	 * @param encoding The encoding. Null for binary data, without encoding
 	 */
+	@SuppressWarnings("SameParameterValue")
 	public PacketTransmitFile(byte[] contents, Charset encoding) {
 		this.contents = contents;
 		this.encoding = encoding;
@@ -36,7 +37,7 @@ public class PacketTransmitFile extends Packet {
 
 	private void read(ObjectInputStream reader) {
 		try {
-			String encodingName = (String) reader.readUTF();
+			String encodingName = reader.readUTF();
 			if (encodingName.equals("NONE")) {
 				encoding = null;
 			} else {
@@ -53,7 +54,7 @@ public class PacketTransmitFile extends Packet {
 	 *
 	 * @return True if there was an encoding specified
 	 */
-	public boolean hasEncoding() {
+	private boolean hasEncoding() {
 		return encoding != null;
 	}
 
@@ -64,7 +65,7 @@ public class PacketTransmitFile extends Packet {
 	 *
 	 * @throws IllegalStateException If {@link #hasEncoding()} returns false
 	 */
-	public String interpretAsString() {
+	private String interpretAsString() {
 		if (!hasEncoding()) {
 			throw new IllegalStateException("No encoding specified.");
 		}

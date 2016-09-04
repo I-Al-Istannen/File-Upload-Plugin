@@ -7,24 +7,26 @@ import java.util.concurrent.TimeUnit;
  */
 public class DurationParser {
 
-	/**
-	 * Small recursive parser by I Al Istannen. Bug me about it, I know it is bad!
-	 *
-	 * Format:
-	 * <br>"xxS" ==> milliseconds
-	 * <br>"xxt" ==> ticks
-	 * <br>"xxs" ==> seconds
-	 * <br>"xxm" ==> minutes
-	 * <br>"xxh" ==> hours
-	 * <br>"xxd" ==> days
-	 *
-	 * @param input The input string
-	 * @return The time in milliseconds
-	 * @throws RuntimeException If an error occurred while parsing.
-	 */
-	public static long parseDurationToTicks(String input) throws RuntimeException {
-		return parseDuration(input) / 50;
-	}
+// --Commented out by Inspection START (04.09.2016 19:06):
+//	/**
+//	 * Small recursive parser by I Al Istannen. Bug me about it, I know it is bad!
+//	 *
+//	 * Format:
+//	 * <br>"xxS" ==> milliseconds
+//	 * <br>"xxt" ==> ticks
+//	 * <br>"xxs" ==> seconds
+//	 * <br>"xxm" ==> minutes
+//	 * <br>"xxh" ==> hours
+//	 * <br>"xxd" ==> days
+//	 *
+//	 * @param input The input string
+//	 * @return The time in milliseconds
+//	 * @throws RuntimeException If an error occurred while parsing.
+//	 */
+//	public static long parseDurationToTicks(String input) throws RuntimeException {
+//		return parseDuration(input) / 50;
+//	}
+// --Commented out by Inspection STOP (04.09.2016 19:06)
 
 	/**
 	 * Small recursive parser by I Al Istannen. Bug me about it, I know it is bad!

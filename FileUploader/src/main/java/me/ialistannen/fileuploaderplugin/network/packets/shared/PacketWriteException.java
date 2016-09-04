@@ -34,6 +34,7 @@ public class PacketWriteException extends Packet {
 	 *
 	 * @return The message
 	 */
+	@SuppressWarnings("unused")
 	public String getMessage() {
 		return message;
 	}

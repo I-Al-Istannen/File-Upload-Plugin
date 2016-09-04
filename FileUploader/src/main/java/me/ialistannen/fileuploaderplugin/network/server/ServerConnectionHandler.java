@@ -15,8 +15,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class ServerConnectionHandler {
 
-	private int port;
-	private volatile AtomicBoolean started = new AtomicBoolean(false);
+	private final int port;
+	private final AtomicBoolean started = new AtomicBoolean(false);
 
 	private ListenerThread listener;
 
@@ -67,10 +67,10 @@ public class ServerConnectionHandler {
 	private class ListenerThread extends Thread {
 
 		private ServerSocket serverSocket;
-		private volatile AtomicBoolean running = new AtomicBoolean(true);
-		private int timeout;
+		private final AtomicBoolean running = new AtomicBoolean(true);
+		private final int timeout;
 
-		private ExecutorService executorService;
+		private final ExecutorService executorService;
 
 		ListenerThread(int timeout) {
 			super("ServerSocketListener - FileUploaderPlugin");

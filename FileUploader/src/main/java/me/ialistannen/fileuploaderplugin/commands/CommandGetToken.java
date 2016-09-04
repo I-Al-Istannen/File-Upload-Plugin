@@ -4,6 +4,7 @@ import me.ialistannen.bukkitutil.commandsystem.base.CommandResultType;
 import me.ialistannen.bukkitutil.commandsystem.implementation.DefaultCommand;
 import me.ialistannen.fileuploaderplugin.FileUploaderPlugin;
 import me.ialistannen.fileuploaderplugin.tokens.Token;
+import me.ialistannen.fileuploaderplugin.tokens.TokenCreator;
 import me.ialistannen.fileuploaderplugin.tokens.TokenManager;
 import me.ialistannen.fileuploaderplugin.util.Util;
 import org.apache.commons.lang.time.DurationFormatUtils;
@@ -67,7 +68,7 @@ class CommandGetToken extends DefaultCommand {
 		Optional<String> first = player.getEffectivePermissions().stream()
 				.filter(PermissionAttachmentInfo::getValue)
 				.map(PermissionAttachmentInfo::getPermission)
-				.filter(permission -> permissionPathsMap.containsKey(permission))
+				.filter(permissionPathsMap::containsKey)
 				.findFirst();
 
 		if (!first.isPresent()) {
@@ -83,8 +84,14 @@ class CommandGetToken extends DefaultCommand {
 
 		Duration duration = FileUploaderPlugin.getInstance().getConfigWrapper().getTokenDuration();
 
-		Token token = FileUploaderPlugin.getInstance().getTokenFactory().getDefaultCreator().get()
-				.create(player, permissionPathsMap.get(first.get()), LocalDateTime.now().plus(duration));
+		Optional<TokenCreator> tokenCreator = FileUploaderPlugin.getInstance().getTokenFactory().getDefaultCreator();
+		if (!tokenCreator.isPresent()) {
+			player.sendMessage(Util.tr("no_token_creator_registered"));
+			return CommandResultType.SUCCESSFUL;
+		}
+
+		Token token = tokenCreator.get().create(player, permissionPathsMap.get(first.get()), LocalDateTime.now().plus
+				(duration));
 
 		tokenManager.addToken(token);
 

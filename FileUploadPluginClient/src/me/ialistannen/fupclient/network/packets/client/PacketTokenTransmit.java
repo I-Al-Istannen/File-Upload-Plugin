@@ -41,9 +41,7 @@ public class PacketTokenTransmit extends Packet {
 	private void read(ObjectInputStream reader) {
 		try {
 			tokenID = (String) reader.readObject();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}

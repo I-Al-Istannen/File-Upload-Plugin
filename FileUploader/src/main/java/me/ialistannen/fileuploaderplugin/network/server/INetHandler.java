@@ -10,7 +10,7 @@ import me.ialistannen.fileuploaderplugin.network.packets.shared.PacketTransmitFi
 /**
  * Handles the incoming packets
  */
-public interface INetHandler {
+interface INetHandler {
 
 	/**
 	 * Called when a heartbeat was sent. For you to handle the response packet
@@ -60,6 +60,7 @@ public interface INetHandler {
 	 * @param packet   The packet
 	 * @param runnable The {@link ClientServingRunnable} which sent the request
 	 */
+	@SuppressWarnings("UnusedParameters")
 	void handlePacketRequestAvailablePaths(PacketRequestAvailablePaths packet, ClientServingRunnable runnable);
 
 	/**

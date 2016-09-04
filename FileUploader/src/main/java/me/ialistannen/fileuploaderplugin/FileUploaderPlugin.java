@@ -26,7 +26,6 @@ public class FileUploaderPlugin extends JavaPlugin {
 	private static FileUploaderPlugin instance;
 
 	private I18N language;
-	private CommandTree commandTree;
 
 	private ConfigWrapper configWrapper;
 	private TokenManager tokenManager;
@@ -75,7 +74,7 @@ public class FileUploaderPlugin extends JavaPlugin {
 	}
 
 	private void initializeCommands() {
-		commandTree = new CommandTree(language);
+		CommandTree commandTree = new CommandTree(language);
 		DefaultCommandExecutor commandExecutor = new DefaultCommandExecutor(commandTree, language);
 		DefaultTabCompleter tabCompleter = new DefaultTabCompleter(commandTree);
 

@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public class PacketListAvailablePaths extends Packet {
 
-	private Set<Path> paths;
+	private final Set<Path> paths;
 
 	/**
 	 * Reads this packet from an input stream. ID will not be part of it.
@@ -40,6 +40,7 @@ public class PacketListAvailablePaths extends Packet {
 	 *
 	 * @return The paths
 	 */
+	@SuppressWarnings("unused")
 	public Set<Path> getPaths() {
 		return paths;
 	}

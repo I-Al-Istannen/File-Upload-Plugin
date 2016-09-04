@@ -13,9 +13,9 @@ import java.util.UUID;
  * A tokenID
  */
 public class Token {
-	private String tokenID;
-	private UUID playerID;
-	private LocalDateTime expireTime;
+	private final String tokenID;
+	private final UUID playerID;
+	private final LocalDateTime expireTime;
 
 	private Set<Path> allowedPaths = new HashSet<>();
 
@@ -51,7 +51,7 @@ public class Token {
 	 *
 	 * @return The time this token will expire
 	 */
-	public LocalDateTime getExpireTime() {
+	private LocalDateTime getExpireTime() {
 		return expireTime;
 	}
 
@@ -80,6 +80,7 @@ public class Token {
 	 *
 	 * @return True if the path is allowed
 	 */
+	@SuppressWarnings("unused")
 	public boolean isAllowed(Path path) {
 		return allowedPaths.contains(path.toAbsolutePath());
 	}

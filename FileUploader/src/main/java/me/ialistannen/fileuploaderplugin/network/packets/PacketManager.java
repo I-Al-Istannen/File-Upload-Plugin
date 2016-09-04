@@ -34,9 +34,9 @@ import java.util.Objects;
 public enum PacketManager {
 	INSTANCE;
 
-	private Map<Integer, Class<? extends Packet>> packetMap = new HashMap<>();
+	private final Map<Integer, Class<? extends Packet>> packetMap = new HashMap<>();
 
-	private ByteArrayOutputStream byteArrayOutputStream;
+	private final ByteArrayOutputStream byteArrayOutputStream;
 
 	PacketManager() {
 		byteArrayOutputStream = new ByteArrayOutputStream();
@@ -70,7 +70,7 @@ public enum PacketManager {
 	 * @throws NullPointerException     If the class doesn't fulfill the {@link Packet} class contract regarding the
 	 *                                  constructor
 	 */
-	public void registerPacket(int id, Class<? extends Packet> clazz) {
+	private void registerPacket(int id, Class<? extends Packet> clazz) {
 		Objects.requireNonNull(clazz);
 
 		if (packetMap.containsKey(id)) {
@@ -119,7 +119,7 @@ public enum PacketManager {
 	 * @throws SocketException           Delegated
 	 */
 	@SuppressWarnings("Duplicates")
-	public Packet readPacket(ObjectInputStream reader, int timeoutMs) throws SocketException {
+	private Packet readPacket(ObjectInputStream reader, int timeoutMs) throws SocketException {
 		Objects.requireNonNull(reader);
 
 		try {

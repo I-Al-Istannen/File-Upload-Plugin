@@ -15,6 +15,7 @@ public class Util {
 	 *
 	 * @return The translated string
 	 */
+	@SuppressWarnings("SameParameterValue")
 	public static String tr(String key, Object... objects) {
 		return FileUploaderPlugin.getInstance().getLanguage().tr(key, objects);
 	}

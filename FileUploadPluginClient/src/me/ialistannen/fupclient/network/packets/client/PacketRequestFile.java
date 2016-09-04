@@ -44,9 +44,7 @@ public class PacketRequestFile extends Packet {
 		try {
 			String pathString = (String) reader.readObject();
 			path = Paths.get(pathString);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}

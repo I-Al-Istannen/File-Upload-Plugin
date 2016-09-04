@@ -16,6 +16,7 @@ public class PacketRequestAvailablePaths extends Packet {
 	 *
 	 * @param reader The reader to read from
 	 */
+	@SuppressWarnings("UnusedParameters") // needed to fulfil the contract
 	public PacketRequestAvailablePaths(ObjectInputStream reader) {
 
 	}

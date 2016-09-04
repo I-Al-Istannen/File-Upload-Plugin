@@ -25,14 +25,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 class ClientServingRunnable implements Runnable {
 
-	private Socket socket;
+	private final Socket socket;
 
-	private INetHandler handler;
+	private final INetHandler handler;
 
 	private OutputStream outputStream;
 	private ObjectOutputStream objectOutputStream;
 
-	private volatile AtomicBoolean cancelled = new AtomicBoolean(false);
+	private final AtomicBoolean cancelled = new AtomicBoolean(false);
 
 	/**
 	 * Creates a new serving thread

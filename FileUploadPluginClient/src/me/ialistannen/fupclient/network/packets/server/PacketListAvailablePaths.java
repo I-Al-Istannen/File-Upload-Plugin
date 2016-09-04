@@ -52,9 +52,7 @@ public class PacketListAvailablePaths extends Packet {
 				String pathString = (String) reader.readObject();
 				paths.add(Paths.get(pathString));
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}

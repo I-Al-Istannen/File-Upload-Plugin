@@ -14,7 +14,7 @@ import java.util.logging.Level;
  */
 public class TokenFactory {
 
-	private Map<String, TokenCreator> tokenCreatorMap = new HashMap<>();
+	private final Map<String, TokenCreator> tokenCreatorMap = new HashMap<>();
 
 	private String defaultCreator;
 
@@ -25,6 +25,7 @@ public class TokenFactory {
 	 *
 	 * @throws IllegalArgumentException If there is already a {@link TokenCreator} registered with that getName
 	 */
+	@SuppressWarnings("SameParameterValue")
 	public void registerTokenCreator(TokenCreator creator) {
 		Objects.requireNonNull(creator);
 
@@ -57,6 +58,7 @@ public class TokenFactory {
 
 		defaultCreator = creatorName;
 
+		@SuppressWarnings("OptionalGetWithoutIsPresent") // The first if in this method does check this.
 		TokenCreator tokenCreator = getTokenCreator(creatorName).get();
 		FileUploaderPlugin.getInstance().getLogger().log(Level.INFO, String.format(
 				"Using token creator of class: '%s' with the name '%s'.",
@@ -93,7 +95,7 @@ public class TokenFactory {
 	 *
 	 * @return True if it contains the token creator
 	 */
-	public boolean contains(String name) {
+	private boolean contains(String name) {
 		return tokenCreatorMap.containsKey(name);
 	}
 }

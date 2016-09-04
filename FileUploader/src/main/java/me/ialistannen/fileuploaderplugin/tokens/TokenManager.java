@@ -16,8 +16,6 @@ public class TokenManager {
 
 	private final ConcurrentMap<String, Token> tokenIdMap;
 
-	private TokenCreator tokenCreator;
-
 	{
 		new BukkitRunnable() {
 			@Override
@@ -45,6 +43,7 @@ public class TokenManager {
 	 *
 	 * @param tokenID The ID of the token
 	 */
+	@SuppressWarnings("unused")
 	public void removeToken(String tokenID) {
 		tokenIdMap.remove(tokenID);
 	}
@@ -67,6 +66,7 @@ public class TokenManager {
 	 *
 	 * @return True if it contains the token
 	 */
+	@SuppressWarnings("unused")
 	public boolean containsTokenID(String tokenID) {
 		return tokenIdMap.containsKey(tokenID);
 	}
@@ -94,7 +94,7 @@ public class TokenManager {
 	/**
 	 * Cleans expired tokens
 	 */
-	public void cleanExpired() {
+	private void cleanExpired() {
 		// explicit synchronizing probably unneeded
 		// TODO: Check it
 		synchronized (tokenIdMap) {

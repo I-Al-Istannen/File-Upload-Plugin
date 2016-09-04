@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FileUploadPluginClient/FileUploadPluginClient.iml" filepath="$PROJECT_DIR$/FileUploadPluginClient/FileUploadPluginClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FileUploader/file-uploader-plugin.iml" filepath="$PROJECT_DIR$/FileUploader/file-uploader-plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/FileUploader/file-uploader-plugin (1).iml" filepath="$PROJECT_DIR$/FileUploader/file-uploader-plugin (1).iml" />
     </modules>
   </component>

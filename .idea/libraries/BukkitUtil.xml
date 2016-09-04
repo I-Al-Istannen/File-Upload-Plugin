@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="BukkitUtil">
+    <CLASSES>
+      <root url="jar://S:/Minecraft/Bukkit Server/1.8.8 clean/plugins/BukkitUtil.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://S:/Minecraft/Bukkit Server/1.8.8 clean/plugins/BukkitUtil.jar!/" />
+    </SOURCES>
+  </library>
+</component>

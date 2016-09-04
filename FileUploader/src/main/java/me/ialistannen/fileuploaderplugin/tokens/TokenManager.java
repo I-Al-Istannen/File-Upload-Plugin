@@ -3,6 +3,7 @@ package me.ialistannen.fileuploaderplugin.tokens;
 import me.ialistannen.fileuploaderplugin.FileUploaderPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,6 +35,8 @@ public class TokenManager {
 	 * @param token The token to add
 	 */
 	public void addToken(Token token) {
+		Objects.requireNonNull(token);
+
 		tokenIdMap.put(token.getTokenID(), token);
 	}
 

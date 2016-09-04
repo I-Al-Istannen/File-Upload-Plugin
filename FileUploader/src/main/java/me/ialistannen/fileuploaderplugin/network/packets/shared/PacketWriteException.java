@@ -23,7 +23,7 @@ public class PacketWriteException extends Packet {
 	}
 
 	/**
-	 * Allows you to create "normal" instances.
+	 * @param message The message explaining the error
 	 */
 	public PacketWriteException(String message) {
 		this.message = message;

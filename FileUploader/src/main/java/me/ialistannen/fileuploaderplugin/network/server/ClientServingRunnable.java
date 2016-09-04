@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Serves a client. May be started by an executor service.
  */
-public class ClientServingRunnable implements Runnable {
+class ClientServingRunnable implements Runnable {
 
 	private Socket socket;
 
@@ -40,7 +40,7 @@ public class ClientServingRunnable implements Runnable {
 	 * @param socket  The client socket
 	 * @param handler The {@link INetHandler} to use
 	 */
-	public ClientServingRunnable(Socket socket, INetHandler handler) {
+	ClientServingRunnable(Socket socket, INetHandler handler) {
 		this.socket = socket;
 		this.handler = handler;
 	}
@@ -101,7 +101,7 @@ public class ClientServingRunnable implements Runnable {
 	 *
 	 * @param packet The packet to send
 	 */
-	public void sendPacket(Packet packet) {
+	void sendPacket(Packet packet) {
 		if(cancelled.get()) {
 			return;
 		}
@@ -115,7 +115,7 @@ public class ClientServingRunnable implements Runnable {
 	/**
 	 * Stops this listener.
 	 */
-	public void stop() {
+	void stop() {
 		cancelled.set(true);
 		Thread.currentThread().interrupt();
 	}

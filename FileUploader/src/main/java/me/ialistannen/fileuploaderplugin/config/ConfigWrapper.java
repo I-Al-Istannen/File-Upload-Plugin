@@ -1,6 +1,7 @@
 package me.ialistannen.fileuploaderplugin.config;
 
 import me.ialistannen.fileuploaderplugin.FileUploaderPlugin;
+import me.ialistannen.fileuploaderplugin.tokens.Token;
 import me.ialistannen.fileuploaderplugin.tokens.TokenCreator;
 import me.ialistannen.fileuploaderplugin.util.DurationParser;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -55,7 +56,9 @@ public class ConfigWrapper {
 
 
 	/**
-	 * @return The time until a token expires
+	 * Returns the duration for which a {@link Token} should stay valid
+	 *
+	 * @return The time until a token expires. Defaults to 10 minutes in case of an error
 	 */
 	public Duration getTokenDuration() {
 		String string = FileUploaderPlugin.getInstance().getConfig().getString("token_duration");
@@ -65,6 +68,35 @@ public class ConfigWrapper {
 			FileUploaderPlugin.getInstance().getLogger().warning("The 'token_duration' in the config is not valid!");
 			return Duration.ofMinutes(10);
 		}
+	}
+
+	/**
+	 * Gets the socket timeout
+	 *
+	 * @return The socket timeout. Defaults to 30 seconds in case of an error
+	 */
+	public Duration getSocketTimeout() {
+		String string = FileUploaderPlugin.getInstance().getConfig().getString("socket_timeout");
+		try {
+			return Duration.ofMillis(DurationParser.parseDuration(string));
+		} catch (RuntimeException e) {
+			FileUploaderPlugin.getInstance().getLogger().warning("The 'socket_timeout' in the config is not valid!");
+			return Duration.ofSeconds(30);
+		}
+	}
+
+	/**
+	 * Returns the specified port
+	 *
+	 * @return The port to listen on. Default is 10 000 if none is specified.
+	 */
+	public int getPort() {
+		int port = FileUploaderPlugin.getInstance().getConfig().getInt("port");
+		if (port == 0) {
+			FileUploaderPlugin.getInstance().getLogger().warning("The 'port' in the config is not valid!");
+			port = 10000;
+		}
+		return port;
 	}
 
 	/**

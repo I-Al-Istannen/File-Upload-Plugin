@@ -1,0 +1,20 @@
+# The language. There must be a file called "Messages_XX.properties" in the language folder.
+# Where "XX" is what you write here. (The language tag ideally)
+language: "en"
+
+# The duration until a token expires
+token_duration: "20s"
+
+# The token creator. Default is "RANDOM". You can register your own through code and then select them here.
+token_creator: "RANDOM"
+
+# The groups.
+groups:
+  # The name of the group
+  example:
+    # The permission you must have to belong to it. Must be explicity given.
+    permission: "example.permission"
+    # The files he has access to. Relative to the "plugins" folder, so leave that out.
+    paths:
+      - "FileUploader/config.yml"
+      - "FileUploader/language/Messages.properties"

@@ -23,7 +23,7 @@ public class PacketReadException extends Packet {
 	}
 
 	/**
-	 * Allows you to create "normal" instances.
+	 * @param message The message that explains the error
 	 */
 	public PacketReadException(String message) {
 		this.message = message;

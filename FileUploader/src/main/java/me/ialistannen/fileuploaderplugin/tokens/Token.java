@@ -26,6 +26,11 @@ public class Token {
 	 * @param expireTime   The time it expires.
 	 */
 	public Token(String tokenID, UUID playerID, Set<Path> allowedPaths, LocalDateTime expireTime) {
+		Objects.requireNonNull(tokenID);
+		Objects.requireNonNull(playerID);
+		Objects.requireNonNull(allowedPaths);
+		Objects.requireNonNull(expireTime);
+
 		this.tokenID = tokenID;
 		this.playerID = playerID;
 		this.allowedPaths = new HashSet<>(allowedPaths);

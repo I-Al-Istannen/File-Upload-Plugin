@@ -21,7 +21,7 @@ public class PacketRequestAvailablePaths extends Packet {
 	}
 
 	/**
-	 * Allows you to create "normal" instances.
+	 * An empty packet.
 	 */
 	public PacketRequestAvailablePaths() {
 	}

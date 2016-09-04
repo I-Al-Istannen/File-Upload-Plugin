@@ -1,10 +1,11 @@
 package me.ialistannen.fileuploaderplugin.network.server;
 
+import me.ialistannen.fileuploaderplugin.FileUploaderPlugin;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.time.LocalDateTime;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -31,7 +32,7 @@ public class ServerConnectionHandler {
 	}
 
 	/**
-	 * Starts the listener, if it is running.
+	 * Starts the listener, if it is not running.
 	 */
 	public synchronized void start() {
 		if (started.get()) {
@@ -43,8 +44,8 @@ public class ServerConnectionHandler {
 	}
 
 	private void createAndStartThread() {
-		// TODO: Make configurable
-		listener = new ListenerThread(10000);
+		listener = new ListenerThread(Math.toIntExact(FileUploaderPlugin.getInstance().getConfigWrapper()
+				.getSocketTimeout().toMillis()));
 		listener.start();
 	}
 
@@ -71,11 +72,11 @@ public class ServerConnectionHandler {
 
 		private ExecutorService executorService;
 
-		public ListenerThread(int timeout) {
+		ListenerThread(int timeout) {
 			super("ServerSocketListener - FileUploaderPlugin");
 			this.timeout = timeout;
 
-			executorService = Executors.newFixedThreadPool(4);
+			executorService = Executors.newCachedThreadPool();
 		}
 
 		@Override
@@ -87,7 +88,7 @@ public class ServerConnectionHandler {
 					Socket clientConnection = serverSocket.accept();
 					clientConnection.setSoTimeout(timeout);
 					ClientServingRunnable runnable = new ClientServingRunnable(clientConnection, new NetHandler());
-					new Thread(runnable, LocalDateTime.now().toString()).start();
+					executorService.submit(runnable);
 				}
 
 			} catch (SocketException ignore) {

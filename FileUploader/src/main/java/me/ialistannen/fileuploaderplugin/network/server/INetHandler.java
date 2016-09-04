@@ -22,15 +22,51 @@ public interface INetHandler {
 	 */
 	void heartbeatSend(int heartbeatId, ClientServingRunnable runnable);
 
+	/**
+	 * Called when the client sends a {@link PacketRequestFile}
+	 *
+	 * @param packet   The Packet
+	 * @param runnable The {@link ClientServingRunnable} which sent the request
+	 */
 	void handleRequestFile(PacketRequestFile packet, ClientServingRunnable runnable);
 
+	/**
+	 * Called when the client sends a {@link PacketPostFile}
+	 *
+	 * @param packet   The Packet
+	 * @param runnable The {@link ClientServingRunnable} which sent the request
+	 */
 	void handlePostFile(PacketPostFile packet, ClientServingRunnable runnable);
 
+	/**
+	 * Called when the client sends a {@link PacketTransmitFile} packet
+	 *
+	 * @param packet   The packet
+	 * @param runnable The {@link ClientServingRunnable} which sent the request
+	 */
 	void handleTransmitFile(PacketTransmitFile packet, ClientServingRunnable runnable);
 
+	/**
+	 * Called when the client sends a {@link PacketTokenTransmit} packet
+	 *
+	 * @param packet   The packet
+	 * @param runnable The {@link ClientServingRunnable} which sent the request
+	 */
 	void handlePacketTokenTransmit(PacketTokenTransmit packet, ClientServingRunnable runnable);
 
+	/**
+	 * Called when the client sends a {@link PacketRequestAvailablePaths} packet
+	 *
+	 * @param packet   The packet
+	 * @param runnable The {@link ClientServingRunnable} which sent the request
+	 */
 	void handlePacketRequestAvailablePaths(PacketRequestAvailablePaths packet, ClientServingRunnable runnable);
 
+	/**
+	 * Called when the client sends a {@link PacketHeartBeatResponse} packet
+	 *
+	 * @param packet   The packet
+	 * @param runnable The {@link ClientServingRunnable} which sent the request
+	 */
 	void handlePacketHeartbeatResponse(PacketHeartBeatResponse packet, ClientServingRunnable runnable);
 }

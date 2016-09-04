@@ -25,7 +25,7 @@ public class PacketAuthenticationStatus extends Packet {
 	}
 
 	/**
-	 * Allows you to create "normal" instances.
+	 * @param authenticationState The current {@link AuthenticationState}
 	 */
 	public PacketAuthenticationStatus(AuthenticationState authenticationState) {
 		this.authenticationState = authenticationState;

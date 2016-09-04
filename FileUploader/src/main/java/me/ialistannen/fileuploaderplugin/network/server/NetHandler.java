@@ -41,41 +41,36 @@ public class NetHandler implements INetHandler {
 
 	private Path postFilePointer = null;
 
-	/**
-	 * Called when a heartbeat was sent. For you to handle the response packet
-	 * <p>
-	 * You need to stop the client serving thread, if no answer follows, using the {@link ClientServingRunnable#stop()}
-	 *
-	 * @param heartbeatId The ID of the heartbeat
-	 */
 	@Override
 	public void heartbeatSend(int heartbeatId, ClientServingRunnable runnable) {
-		// second missed heartbeat
-		if(timedOut.get()) {
+
+		// second missed heartbeat. Assume it died.
+		if (timedOut.get()) {
 			runnable.stop();
 			return;
 		}
+
 		this.heartBeatId = heartbeatId;
 		this.timedOut.set(true);
 	}
 
 	@Override
 	public void handleRequestFile(PacketRequestFile packet, ClientServingRunnable runnable) {
-		if(!isAuthenticated()) {
+		if (!isAuthenticated()) {
 			return;
 		}
 
 		Path path = resolvePath(packet.getPath());
-		if(!hasPermission(path)) {
+		if (!hasPermission(path)) {
 			runnable.sendPacket(new PacketPermissionDenied("No right to request '" + path + "'"));
 			return;
 		}
 
-		if(!Files.exists(path)) {
+		if (!Files.exists(path)) {
 			runnable.sendPacket(new PacketReadException("The file '" + path + "' doesn't exist"));
 			return;
 		}
-		if(Files.isDirectory(path)) {
+		if (Files.isDirectory(path)) {
 			runnable.sendPacket(new PacketReadException("The file '" + path + "' is a directory."));
 			return;
 		}
@@ -92,12 +87,12 @@ public class NetHandler implements INetHandler {
 
 	@Override
 	public void handlePostFile(PacketPostFile packet, ClientServingRunnable runnable) {
-		if(!isAuthenticated()) {
+		if (!isAuthenticated()) {
 			return;
 		}
 
 		Path path = resolvePath(packet.getPath());
-		if(!hasPermission(path)) {
+		if (!hasPermission(path)) {
 			runnable.sendPacket(new PacketPermissionDenied("No right to post '" + path + "'"));
 			return;
 		}
@@ -109,19 +104,20 @@ public class NetHandler implements INetHandler {
 
 	@Override
 	public void handleTransmitFile(PacketTransmitFile packet, ClientServingRunnable runnable) {
-		if(!isAuthenticated()) {
+		if (!isAuthenticated()) {
 			return;
 		}
 
-		if(postFilePointer == null) {
-			// TODO: Create a field for this.
+		if (postFilePointer == null) {
 			runnable.sendPacket(new PacketWriteException("No post packet send before."));
 			return;
 		}
 
 		try {
+			// TODO; Think about sending the file options too.
 			Files.write(postFilePointer, packet.getContents(),
 					StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
 			runnable.sendPacket(new PacketOperationSuccessful());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -133,8 +129,10 @@ public class NetHandler implements INetHandler {
 	@Override
 	public void handlePacketTokenTransmit(PacketTokenTransmit packet, ClientServingRunnable runnable) {
 		String tokenID = packet.getTokenID();
+
 		Optional<Token> tokenOptional = FileUploaderPlugin.getInstance().getTokenManager().getToken(tokenID);
-		if(!tokenOptional.isPresent()) {
+
+		if (!tokenOptional.isPresent()) {
 			runnable.sendPacket(new PacketAuthenticationStatus(AuthenticationState.INVALID_TOKEN));
 			runnable.stop();
 			return;
@@ -146,7 +144,7 @@ public class NetHandler implements INetHandler {
 
 	@Override
 	public void handlePacketRequestAvailablePaths(PacketRequestAvailablePaths packet, ClientServingRunnable runnable) {
-		if(!isAuthenticated()) {
+		if (!isAuthenticated()) {
 			return;
 		}
 
@@ -155,7 +153,7 @@ public class NetHandler implements INetHandler {
 
 	@Override
 	public void handlePacketHeartbeatResponse(PacketHeartBeatResponse packet, ClientServingRunnable runnable) {
-		if(heartBeatId != packet.getId()) {
+		if (heartBeatId != packet.getId()) {
 			runnable.stop();
 			return;
 		}

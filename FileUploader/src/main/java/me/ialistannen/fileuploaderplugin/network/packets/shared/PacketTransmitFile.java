@@ -25,8 +25,6 @@ public class PacketTransmitFile extends Packet {
 	}
 
 	/**
-	 * Allows you to create "normal" instances.
-	 *
 	 * @param contents The contents
 	 * @param encoding The encoding. Null for binary data, without encoding
 	 */
@@ -38,7 +36,7 @@ public class PacketTransmitFile extends Packet {
 
 	private void read(ObjectInputStream reader) {
 		try {
-			String encodingName = (String) reader.readObject();
+			String encodingName = (String) reader.readUTF();
 			if (encodingName.equals("NONE")) {
 				encoding = null;
 			} else {
@@ -91,9 +89,9 @@ public class PacketTransmitFile extends Packet {
 	public void write(ObjectOutputStream writer) {
 		try {
 			if (encoding != null) {
-				writer.writeObject(encoding.name());
+				writer.writeUTF(encoding.name());
 			} else {
-				writer.writeObject("NONE");
+				writer.writeUTF("NONE");
 			}
 			writer.writeObject(contents);
 		} catch (IOException e) {

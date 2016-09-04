@@ -5,6 +5,7 @@ import me.ialistannen.fileuploaderplugin.FileUploaderPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -25,6 +26,8 @@ public class TokenFactory {
 	 * @throws IllegalArgumentException If there is already a {@link TokenCreator} registered with that getName
 	 */
 	public void registerTokenCreator(TokenCreator creator) {
+		Objects.requireNonNull(creator);
+
 		if (contains(creator.getName())) {
 			throw new IllegalArgumentException("There is already a TokenCreator with the name '"
 					+ creator.getName() + "' registered.");
@@ -45,6 +48,8 @@ public class TokenFactory {
 	 * @throws IllegalStateException If there is no {@link TokenCreator} with that getName registered
 	 */
 	public void setDefaultCreator(String creatorName) {
+		Objects.requireNonNull(creatorName);
+
 		if (!contains(creatorName)) {
 			throw new IllegalStateException("There is no TokenCreator with the name '"
 					+ creatorName + "' registered.");

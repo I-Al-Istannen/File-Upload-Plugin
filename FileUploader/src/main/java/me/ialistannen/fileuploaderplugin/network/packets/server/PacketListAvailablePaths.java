@@ -29,7 +29,7 @@ public class PacketListAvailablePaths extends Packet {
 	}
 
 	/**
-	 * Allows you to create "normal" instances.
+	 * @param paths The allowed paths
 	 */
 	public PacketListAvailablePaths(Collection<Path> paths) {
 		this.paths = new HashSet<>(paths);
@@ -48,12 +48,9 @@ public class PacketListAvailablePaths extends Packet {
 		try {
 			int size = reader.readInt();
 			for (int i = 0; i < size; i++) {
-				String pathString = (String) reader.readObject();
-				paths.add(Paths.get(pathString));
+				paths.add(Paths.get(reader.readUTF()));
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
@@ -68,7 +65,7 @@ public class PacketListAvailablePaths extends Packet {
 		try {
 			writer.writeInt(paths.size());
 			for (Path path : paths) {
-				writer.writeObject(path.toString());
+				writer.writeUTF(path.toString());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

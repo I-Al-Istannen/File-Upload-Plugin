@@ -76,11 +76,12 @@ public class PacketAuthenticationStatus extends Packet {
 	/**
 	 * The different authentication states
 	 */
+	@SuppressWarnings("unused")
 	public enum AuthenticationState {
 		/**
 		 * Successfully authenticated
 		 */
-		SUCCESSFUL,
+		@SuppressWarnings("unused")SUCCESSFUL,
 		/**
 		 * The token is invalid
 		 */

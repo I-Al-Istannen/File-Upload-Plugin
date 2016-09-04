@@ -27,13 +27,9 @@ import java.util.List;
 
 public class Main {
 
-	private static Path serverPath, clientPath;
-	private static String token;
 	private static boolean upload;
 
-	private static int port;
-	private static String hostName;
-
+	@SuppressWarnings("unused")
 	public static void main(String[] args) throws IOException {
 		List<String> list = Arrays.asList(args);
 		if (!list.contains("--serverPath") || !list.contains("--clientPath") || !list.contains("--token")
@@ -54,13 +50,13 @@ public class Main {
 			upload = true;
 		}
 
-		token = list.get(list.indexOf("--token") + 1);
+		String token = list.get(list.indexOf("--token") + 1);
 
-		serverPath = Paths.get(list.get(list.indexOf("--serverPath") + 1));
-		clientPath = Paths.get(list.get(list.indexOf("--clientPath") + 1));
+		Path serverPath = Paths.get(list.get(list.indexOf("--serverPath") + 1));
+		Path clientPath = Paths.get(list.get(list.indexOf("--clientPath") + 1));
 
-		port = Integer.parseInt(list.get(list.indexOf("--port") + 1));
-		hostName = list.get(list.indexOf("--host") + 1);
+		int port = Integer.parseInt(list.get(list.indexOf("--port") + 1));
+		String hostName = list.get(list.indexOf("--host") + 1);
 
 		Socket socket = new Socket(hostName, port);
 		socket.setSoTimeout(10000);
@@ -94,7 +90,6 @@ public class Main {
 			if (answer instanceof PacketPermissionDenied) {
 				System.out.println("Permission to path: '" + serverPath + "' denied!");
 				System.out.println(((PacketPermissionDenied) answer).getMessage());
-				return;
 			} else if (answer instanceof PacketTransmitFile) {
 				if (!Files.exists(clientPath)) {
 					Files.createFile(clientPath);
@@ -102,7 +97,6 @@ public class Main {
 				Files.write(clientPath, ((PacketTransmitFile) answer).getContents(),
 						StandardOpenOption.TRUNCATE_EXISTING);
 				System.out.println("Wrote the file to '" + clientPath.toAbsolutePath() + "'");
-				return;
 			}
 		} else {
 			PacketPostFile packetPostFile = new PacketPostFile(serverPath);
@@ -122,7 +116,6 @@ public class Main {
 				System.out.println("Error writing file to: '" + serverPath + "'");
 				System.out.println("Source file is in: '" + clientPath.toAbsolutePath() + "'");
 				System.out.println("Error: " + ((PacketWriteException) answer).getMessage());
-				return;
 			} else if (answer instanceof PacketOperationSuccessful) {
 				System.out.println("Successfully uploaded a file from");
 				System.out.println(clientPath.toAbsolutePath());

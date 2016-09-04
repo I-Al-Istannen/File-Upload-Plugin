@@ -37,6 +37,7 @@ public class PacketPostFile extends Packet {
 	 *
 	 * @return The path
 	 */
+	@SuppressWarnings("unused")
 	public Path getPath() {
 		return path;
 	}

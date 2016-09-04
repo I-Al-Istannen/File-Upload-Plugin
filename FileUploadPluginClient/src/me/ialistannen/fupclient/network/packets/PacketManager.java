@@ -37,6 +37,7 @@ public enum PacketManager {
 
 	private final ByteArrayOutputStream byteArrayOutputStream;
 
+	@SuppressWarnings("unused")
 	PacketManager() {
 		byteArrayOutputStream = new ByteArrayOutputStream();
 

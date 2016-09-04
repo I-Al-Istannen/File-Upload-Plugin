@@ -26,7 +26,7 @@ public class PacketHeartbeatSend extends Packet {
 	/**
 	 * @param id The ID of the heartbeat
 	 */
-	public PacketHeartbeatSend(int id) {
+	private PacketHeartbeatSend(int id) {
 		this.id = id;
 	}
 
@@ -44,7 +44,7 @@ public class PacketHeartbeatSend extends Packet {
 	 *
 	 * @return The ID of this heartbeat
 	 */
-	public int getId() {
+	private int getId() {
 		return id;
 	}
 

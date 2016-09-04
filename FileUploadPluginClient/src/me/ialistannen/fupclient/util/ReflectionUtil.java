@@ -40,9 +40,9 @@ public class ReflectionUtil {
 	 *
 	 * @return The resulting object or null if an error occurred / the method didn't return a thing
 	 */
-	public static @Nullable Object invokeMethod(Class<?> clazz, Object handle, String methodName, Class[]
+	private static @Nullable Object invokeMethod(Class<?> clazz, Object handle, String methodName, Class[]
 			parameterClasses,
-	                                            Object... args) {
+	                                             Object... args) {
 		Optional<Method> methodOptional = getMethod(clazz, methodName, parameterClasses);
 
 		if (!methodOptional.isPresent()) {
@@ -68,6 +68,7 @@ public class ReflectionUtil {
 	 *
 	 * @return The resulting object or null if an error occurred / the method didn't return a thing
 	 */
+	@SuppressWarnings("unused")
 	public static Object invokeMethod(Method method, Object handle, Object... args) {
 		try {
 			return method.invoke(handle, args);

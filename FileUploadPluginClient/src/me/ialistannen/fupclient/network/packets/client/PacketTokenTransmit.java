@@ -34,6 +34,7 @@ public class PacketTokenTransmit extends Packet {
 	 *
 	 * @return The tokenID
 	 */
+	@SuppressWarnings("unused")
 	public String getTokenID() {
 		return tokenID;
 	}

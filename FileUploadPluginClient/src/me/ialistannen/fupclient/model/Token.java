@@ -10,8 +10,8 @@ import java.util.Set;
 /**
  * A tokenID
  */
-public class Token {
-	private String tokenID;
+class Token {
+	private final String tokenID;
 
 	private Set<Path> allowedPaths = new HashSet<>();
 
@@ -19,6 +19,7 @@ public class Token {
 	 * @param tokenID      The tokenID
 	 * @param allowedPaths The allowed paths
 	 */
+	@SuppressWarnings("unused")
 	public Token(String tokenID, Set<Path> allowedPaths) {
 		this.tokenID = tokenID;
 		this.allowedPaths = new HashSet<>(allowedPaths);

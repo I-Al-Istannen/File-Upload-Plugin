@@ -35,6 +35,7 @@ public class PacketHeartBeatResponse extends Packet {
 	 *
 	 * @return The ID of the heartbeat
 	 */
+	@SuppressWarnings("unused")
 	public int getId() {
 		return id;
 	}

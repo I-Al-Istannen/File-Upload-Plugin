@@ -36,6 +36,7 @@ public class PacketRequestFile extends Packet {
 	 *
 	 * @return The Path it wants to read
 	 */
+	@SuppressWarnings("unused")
 	public Path getPath() {
 		return path;
 	}

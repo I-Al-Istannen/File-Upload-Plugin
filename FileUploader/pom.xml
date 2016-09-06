@@ -6,7 +6,7 @@
 
     <groupId>me.ialistannen</groupId>
     <artifactId>file-uploader-plugin</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.3-BETA</version>
 
     <build>
         <plugins>

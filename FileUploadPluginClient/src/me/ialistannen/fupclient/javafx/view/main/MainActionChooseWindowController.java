@@ -18,6 +18,7 @@ import me.ialistannen.fupclient.javafx.logic.ServerConnection;
 import me.ialistannen.fupclient.javafx.util.Util;
 import me.ialistannen.fupclient.model.Token;
 import me.ialistannen.fupclient.network.packets.Packet;
+import me.ialistannen.fupclient.network.packets.client.PacketEndConnection;
 import me.ialistannen.fupclient.network.packets.client.PacketPostFile;
 import me.ialistannen.fupclient.network.packets.client.PacketRequestFile;
 import me.ialistannen.fupclient.network.packets.server.PacketPermissionDenied;
@@ -381,6 +382,12 @@ public class MainActionChooseWindowController {
 
 	@FXML
 	void onExit(ActionEvent event) {
+		try {
+			JavaFxMain.getInstance().getServerConnection().writePacket(new PacketEndConnection());
+		} catch (Exception e) {
+			// just for me. Shouldn't affect the program in any way
+			e.printStackTrace();
+		}
 		System.exit(0);
 	}
 }

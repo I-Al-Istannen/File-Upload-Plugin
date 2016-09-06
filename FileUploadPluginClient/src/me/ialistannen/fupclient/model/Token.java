@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * A tokenID
  */
-class Token {
+public class Token {
 	private final String tokenID;
 
 	private Set<Path> allowedPaths = new HashSet<>();
@@ -43,7 +43,8 @@ class Token {
 	 * @return True if the path is allowed
 	 */
 	public boolean isAllowed(Path path) {
-		return allowedPaths.contains(path.toAbsolutePath());
+//		return allowedPaths.contains(path.toAbsolutePath());
+		return allowedPaths.contains(path);
 	}
 
 	/**

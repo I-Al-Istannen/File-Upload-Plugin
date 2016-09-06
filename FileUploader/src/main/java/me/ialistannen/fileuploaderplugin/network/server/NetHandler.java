@@ -178,7 +178,7 @@ public class NetHandler implements INetHandler {
 	}
 
 	private Path resolvePath(Path path) {
-		return PLUGINS_DIR.resolve(path).toAbsolutePath();
+		return PLUGINS_DIR.resolve(path);
 	}
 
 	private boolean hasNoPermission(Path path) {

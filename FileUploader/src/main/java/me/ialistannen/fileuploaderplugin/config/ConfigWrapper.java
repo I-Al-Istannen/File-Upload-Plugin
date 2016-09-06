@@ -131,7 +131,8 @@ public class ConfigWrapper {
 			Set<Path> paths = new HashSet<>();
 			for (String pathString : config.getStringList(key + ".paths")) {
 				Path path = Paths.get(pathString);
-				path = PLUGINS_DIR.resolve(path).toAbsolutePath();
+//				path = PLUGINS_DIR.resolve(path).toAbsolutePath();
+				path = PLUGINS_DIR.resolve(path);
 				paths.add(path);
 			}
 

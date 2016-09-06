@@ -121,7 +121,7 @@ public enum PacketManager {
 	 * @throws SocketException           Delegated
 	 */
 	@SuppressWarnings("Duplicates")
-	private Packet readPacket(ObjectInputStream reader, int timeoutMs) throws SocketException {
+	public Packet readPacket(ObjectInputStream reader, int timeoutMs) throws SocketException {
 		Objects.requireNonNull(reader);
 
 		try {

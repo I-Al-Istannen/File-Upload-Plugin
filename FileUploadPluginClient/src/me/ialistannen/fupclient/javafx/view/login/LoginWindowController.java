@@ -3,18 +3,21 @@ package me.ialistannen.fupclient.javafx.view.login;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.text.Font;
+import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
 import me.ialistannen.fupclient.javafx.JavaFxMain;
-import me.ialistannen.fupclient.util.Util;
+import me.ialistannen.fupclient.javafx.logic.ServerConnection;
+import me.ialistannen.fupclient.javafx.logic.ServerConnection.State;
+import me.ialistannen.fupclient.javafx.view.main.MainActionChooseWindowController;
+import me.ialistannen.fupclient.model.Token;
 
 import java.io.IOException;
-import java.net.Socket;
 
 /**
  * The controller for the Login window
@@ -105,36 +108,48 @@ public class LoginWindowController {
 		int port = Integer.parseInt(portString);
 
 		new Thread(() -> {
-			try (Socket socket = new Socket(hostName, port)) {
-				socket.setSoTimeout(10000);
-				boolean validToken = false;     // TODO: This!
-				if (!validToken) {
-					Platform.runLater(() -> {
-						Alert alert = new Alert(AlertType.ERROR);
-						alert.initOwner(JavaFxMain.getInstance().getPrimaryStage());
-						alert.setTitle("Invalid token");
-						alert.setHeaderText("The token is invalid");
-						alert.setContentText("The token you provided is expired or not valid at all. Same outcome.");
-						alert.show();
-					});
-				} else {
-					// Valid token
-				}
-			} catch (IOException e) {
+
+			ServerConnection connection = new ServerConnection(hostName, port, token);
+			JavaFxMain.getInstance().setServerConnection(connection);
+			connection.authenticate();
+
+			if (connection.getState() == State.INVALID_TOKEN) {
 				Platform.runLater(() -> {
 					Alert alert = new Alert(AlertType.ERROR);
-					String expandable = Util.getStackTrace(e);
-					TextArea textArea = new TextArea(expandable);
-					textArea.setFont(Font.font("monospaced"));
-					alert.getDialogPane().setExpandableContent(textArea);
-
-					alert.setTitle("Exception while connecting");
-					alert.setHeaderText("An error occurred while trying to connect to the host.");
-					alert.setContentText("Please see the expandable content for a more detailed error message.");
+					alert.initOwner(JavaFxMain.getInstance().getPrimaryStage());
+					alert.setTitle("Invalid token");
+					alert.setHeaderText("The token is invalid");
+					alert.setContentText("The token you provided is expired or not valid at all. Same outcome.");
 					alert.show();
 				});
+			} else if (connection.getState() == State.AUTHENTICATED) {
+				connection.createToken();
+				showMainActionWindow(connection.getToken());
 			}
 		}).start();
 	}
 
+	private void showMainActionWindow(Token token) {
+		if (!Platform.isFxApplicationThread()) {
+			Platform.runLater(() -> showMainActionWindow(token));
+			return;
+		}
+		try {
+			FXMLLoader loader = new FXMLLoader(
+					MainActionChooseWindowController.class
+							.getResource("MainActionChooseWindow.fxml")
+			);
+			Pane pane = loader.load();
+
+			MainActionChooseWindowController controller = loader.getController();
+			controller.setToken(token);
+
+			Scene scene = new Scene(pane);
+			JavaFxMain.getInstance().getPrimaryStage().hide();
+			JavaFxMain.getInstance().getPrimaryStage().setScene(scene);
+			JavaFxMain.getInstance().getPrimaryStage().show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

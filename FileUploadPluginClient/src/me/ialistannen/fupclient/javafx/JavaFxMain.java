@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import me.ialistannen.fupclient.javafx.logic.ServerConnection;
 import me.ialistannen.fupclient.javafx.view.login.LoginWindowController;
 
 /**
@@ -16,6 +17,8 @@ public class JavaFxMain extends Application {
 
 	private Stage primaryStage;
 
+	private volatile ServerConnection serverConnection;
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
@@ -26,8 +29,23 @@ public class JavaFxMain extends Application {
 
 		Scene scene = new Scene(pane);
 		primaryStage.setScene(scene);
+		primaryStage.setTitle("File uploader plugin - Client");
 
 		primaryStage.show();
+	}
+
+	/**
+	 * @param serverConnection The new server connection. Null is permitted.
+	 */
+	public synchronized void setServerConnection(ServerConnection serverConnection) {
+		this.serverConnection = serverConnection;
+	}
+
+	/**
+	 * @return The current server connection. May be null
+	 */
+	public synchronized ServerConnection getServerConnection() {
+		return serverConnection;
 	}
 
 	/**

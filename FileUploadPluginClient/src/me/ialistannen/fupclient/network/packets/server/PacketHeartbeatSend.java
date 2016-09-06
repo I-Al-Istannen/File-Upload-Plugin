@@ -44,7 +44,7 @@ public class PacketHeartbeatSend extends Packet {
 	 *
 	 * @return The ID of this heartbeat
 	 */
-	private int getId() {
+	public int getId() {
 		return id;
 	}
 
